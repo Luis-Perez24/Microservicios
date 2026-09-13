@@ -1,0 +1,158 @@
+{
+  "consumer": {
+    "name": "PortalUsuario"
+  },
+  "interactions": [
+    {
+      "description": "una consulta de reservas del usuario U100",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "el usuario U100 tiene una reserva activa"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/reservas",
+        "query": {
+          "usuarioId": [
+            "U100"
+          ]
+        }
+      },
+      "response": {
+        "body": {
+          "content": [
+            {
+              "estado": "ACTIVA",
+              "fecha": "2026-09-15",
+              "horas": 2,
+              "id": "R-1001",
+              "sala": "SALA-1",
+              "usuarioId": "U100"
+            }
+          ],
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type",
+                  "min": 1
+                }
+              ]
+            },
+            "$[*].estado": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^ACTIVA$"
+                }
+              ]
+            },
+            "$[*].fecha": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "format": "yyyy-MM-dd",
+                  "match": "date"
+                }
+              ]
+            },
+            "$[*].horas": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            },
+            "$[*].id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^R-\\d+$"
+                }
+              ]
+            },
+            "$[*].sala": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^SALA-\\d+$"
+                }
+              ]
+            },
+            "$[*].usuarioId": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^U100$"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      },
+      "type": "Synchronous/HTTP"
+    },
+    {
+      "description": "una consulta de reservas del usuario U200",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "el usuario U200 no tiene reservas"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/reservas",
+        "query": {
+          "usuarioId": [
+            "U200"
+          ]
+        }
+      },
+      "response": {
+        "body": {
+          "content": [],
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": 200
+      },
+      "type": "Synchronous/HTTP"
+    }
+  ],
+  "metadata": {
+    "pactRust": {
+      "ffi": "0.5.4",
+      "models": "1.3.11"
+    },
+    "pactSpecification": {
+      "version": "4.0"
+    }
+  },
+  "provider": {
+    "name": "ServicioReservas"
+  }
+}
