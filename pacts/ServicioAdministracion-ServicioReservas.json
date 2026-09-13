@@ -1,0 +1,79 @@
+{
+  "consumer": {
+    "name": "ServicioAdministracion"
+  },
+  "interactions": [
+    {
+      "description": "una verificacion de una reserva existente y activa",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "la reserva R-1001 existe y esta activa"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/reservas/R-1001/verificacion"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "reservaId": "R-1001",
+            "valida": true
+          },
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": 200
+      },
+      "type": "Synchronous/HTTP"
+    },
+    {
+      "description": "una verificacion de una reserva inexistente",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "la reserva R-9999 no existe"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/reservas/R-9999/verificacion"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "reservaId": "R-9999",
+            "valida": false
+          },
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": 200
+      },
+      "type": "Synchronous/HTTP"
+    }
+  ],
+  "metadata": {
+    "pactRust": {
+      "ffi": "0.5.4",
+      "models": "1.3.11"
+    },
+    "pactSpecification": {
+      "version": "4.0"
+    }
+  },
+  "provider": {
+    "name": "ServicioReservas"
+  }
+}

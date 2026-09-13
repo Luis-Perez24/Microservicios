@@ -1,0 +1,138 @@
+{
+  "consumer": {
+    "name": "AplicacionReserva"
+  },
+  "interactions": [
+    {
+      "description": "una solicitud de reserva con horas invalidas",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "el sistema acepta nuevas reservas"
+        }
+      ],
+      "request": {
+        "body": {
+          "content": {
+            "fecha": "2026-09-15",
+            "horas": 0,
+            "sala": "SALA-1",
+            "usuarioId": "U100"
+          },
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "POST",
+        "path": "/reservas"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "error": "HORAS_INVALIDAS",
+            "mensaje": "La cantidad de horas debe ser mayor a cero"
+          },
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$.mensaje": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          }
+        },
+        "status": 400
+      },
+      "type": "Synchronous/HTTP"
+    },
+    {
+      "description": "una solicitud de reserva valida",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "el sistema acepta nuevas reservas"
+        }
+      ],
+      "request": {
+        "body": {
+          "content": {
+            "fecha": "2026-09-15",
+            "horas": 2,
+            "sala": "SALA-1",
+            "usuarioId": "U100"
+          },
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "method": "POST",
+        "path": "/reservas"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "estado": "ACTIVA",
+            "fecha": "2026-09-15",
+            "horas": 2,
+            "id": "R-1001",
+            "sala": "SALA-1",
+            "usuarioId": "U100"
+          },
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$.id": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "^R-\\d+$"
+                }
+              ]
+            }
+          }
+        },
+        "status": 201
+      },
+      "type": "Synchronous/HTTP"
+    }
+  ],
+  "metadata": {
+    "pactRust": {
+      "ffi": "0.5.4",
+      "models": "1.3.11"
+    },
+    "pactSpecification": {
+      "version": "4.0"
+    }
+  },
+  "provider": {
+    "name": "ServicioReservas"
+  }
+}
