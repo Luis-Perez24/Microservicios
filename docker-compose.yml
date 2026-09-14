@@ -1,0 +1,31 @@
+services:
+  reservas:
+    build:
+      context: .
+      dockerfile: services/reservas/Dockerfile
+    environment:
+      - PACT_STATES_ENABLED=1
+    ports:
+      - "8001:8000"
+
+  portal:
+    build:
+      context: .
+      dockerfile: services/portal_usuario/Dockerfile
+    environment:
+      - RESERVAS_URL=http://reservas:8000
+    ports:
+      - "8002:8000"
+    depends_on:
+      - reservas
+
+  administracion:
+    build:
+      context: .
+      dockerfile: services/administracion/Dockerfile
+    environment:
+      - RESERVAS_URL=http://reservas:8000
+    ports:
+      - "8003:8000"
+    depends_on:
+      - reservas
