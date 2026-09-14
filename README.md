@@ -2,8 +2,6 @@
 
 Pruebas de contrato con **Pact** entre un proveedor (`ServicioReservas`) y tres
 consumidores (`AplicacionReserva`, `PortalUsuario` y `ServicioAdministracion`).
-Todo el acuerdo técnico vive en [`docs/api-contract.md`](docs/api-contract.md) y
-**no se modifica nada fuera de lo que ahí aparece**.
 
 ## Integrantes
 
